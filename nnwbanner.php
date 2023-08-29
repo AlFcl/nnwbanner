@@ -84,128 +84,153 @@ function youtube_widget_button_link_field() {
 }
 
 // Widget
+
+
+// [El resto del código de administración y funciones se mantienen igual...]
+
+// Widget
 function youtube_widget() {
     $video_link = get_option('nnw_popup_video_link');
     $bg_image = get_option('nnw_popup_bg_image');
+    $button_text = get_option('nnw_popup_button_text');
+    $button_link = get_option('nnw_popup_button_link');
     $embed_url = str_replace('watch?v=', 'embed/', $video_link);
-    $embed_url .= '?autoplay=1';
 
     ?>
     <meta charset="UTF-8">
     <style>
-        .nnwPopup {
-            width: calc(100vh * 9/16);
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            right: 0;
-            display: block;
-            z-index: 9999;
-            background-image: url('<?php echo esc_url($bg_image); ?>');
-            background-size: cover;
-            background-position: center;
-            padding: 0;
-            overflow: hidden;
-        }
+  .nnwPopup {
+    width: calc(100vh * 9/16);
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    display: block;
+    z-index: 9999;
+    background-image: url('<?php echo esc_url($bg_image); ?>');
+    background-size: cover;
+    background-position: center;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
 
-        .nnwPopup iframe {
-            position: absolute;
-            width: calc(100% - 24px); 
-            height: calc(100% - 162px); 
-            top: 150px;
-            bottom: 12px;
-            right: 12px;
-            left: 12px;
-        }
+.nnwPopup iframe {
+    width: calc(100% - 24px); 
+    height: calc(100% - 262px); 
+    margin-top: 150px;
+}
 
-        .nnwPopup-close {
-            position: absolute;
-            top: 100px;
-            right: 20px;
-            background-color: red; /* fondo rojo */
-            color: white; /* letra blanca */
-            border-radius: 50%;
-            height: 30px;
-            width: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: 0.3s; /* Transición suave al cambiar de color */
-        }
+.nnwPopup-button {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 12px;
+    padding: 10px 20px;
+    background-color: #5c1faf;
+    color: #becc42;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: 0.3s;
+    width: 200px;
+}
 
-        .nnwPopup-close:hover {
-            background-color: white; /* al pasar el mouse: fondo blanco */
-            color: red; /* al pasar el mouse: letra roja */
-        }
+.nnwPopup-button:hover {
+    background-color: #becc42;
+    color: #5c1faf;
+}
 
-        .playButton {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 150px; /* Ajustado para que encaje el texto "Abrir entrevista" */
-            height: 50px;
-            background-image: url('<?php echo esc_url($bg_image); ?>');
-            background-size: cover;
-            background-position: center;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            border-radius: 25px;
-            color: #FFF;
-            font-size: 16px;
-            text-align: center;
-            line-height: 50px;
-        }
+.nnwPopup-close {
+    position: absolute;
+    top: 100px;
+    right: 20px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
 
-        @media (max-width: 768px) { /* Estilos para móviles */
-            .nnwPopup {
-                width: 100vw;
-                top: 0;
-                right: 0;
-                display: none; /* Hace que el widget comience cerrado en móviles */
-            }
+.nnwPopup-close:hover {
+    background-color: white;
+    color: red;
+}
 
-            .nnwPopup iframe {
-                width: calc(100% - 24px); 
-                top: 120px;
-            }
-            
-            .nnwPopup-close {
-                top: 70px;
-            }
-            
-            .playButton {
-                display: flex; /* Hace que el botón esté visible desde el inicio en móviles */
-            }
-        }
+.playButton {
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    background-image: url('<?php echo esc_url($bg_image); ?>');
+    background-size: cover;
+    background-position: center;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white; /* Aquí está el cambio de color de fuente */
+}
+
+@media (max-width: 768px) {
+    .nnwPopup {
+        width: 100vw;
+        top: 0;
+        right: 0;
+        display: none;
+    }
+
+    .nnwPopup iframe {
+        width: calc(100% - 24px);
+        top: 120px;
+    }
+
+    .nnwPopup-close {
+        top: 70px;
+    }
+
+    .playButton {
+        display: flex;
+    }
+}
+
     </style>
     <div class="nnwPopup">
         <div class="nnwPopup-close">&#10005;</div>
-        <iframe src="<?php echo esc_url($embed_url); ?>" frameborder="0" allowfullscreen></iframe>
+        <iframe src="<?php echo esc_url($embed_url); ?>" frameborder="0"></iframe>
+        <a href="<?php echo esc_url($button_link); ?>" class="nnwPopup-button"><?php echo esc_html($button_text); ?></a>
     </div>
     <div class="playButton">Abrir entrevista</div>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var popup = document.querySelector('.nnwPopup');
-            var closeButton = document.querySelector('.nnwPopup-close');
-            var playButton = document.querySelector('.playButton');
+    document.addEventListener('DOMContentLoaded', function() {
+    var popup = document.querySelector('.nnwPopup');
+    var closeButton = document.querySelector('.nnwPopup-close');
+    var playButton = document.querySelector('.playButton');
 
-            closeButton.addEventListener('click', function(e) {
-                e.preventDefault();
-                popup.style.display = 'none';
-                playButton.style.display = 'flex';
-                var iframe = document.querySelector('.nnwPopup iframe');
-                iframe.src = iframe.src;
-            });
+    closeButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        console.log('Botón X presionado'); // Aquí está el console.log
 
-            playButton.addEventListener('click', function() {
-                popup.style.display = 'block';
-                playButton.style.display = 'none';
-            });
-        });
+        popup.style.display = 'none';
+        playButton.style.display = 'flex';
+        var iframe = document.querySelector('.nnwPopup iframe');
+        iframe.src = iframe.src;
+    });
+
+    playButton.addEventListener('click', function() {
+                console.log('Botón ver artículo presionado'); // Mensaje de consola para el botón ver artículo
+
+        popup.style.display = 'block';
+        playButton.style.display = 'none';
+    });
+});
     </script>
     <?php
 }
