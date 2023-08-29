@@ -123,7 +123,8 @@ function youtube_widget() {
             position: absolute;
             top: 100px;
             right: 20px;
-            background-color: rgba(255,255,255,0.6);
+            background-color: red; /* fondo rojo */
+            color: white; /* letra blanca */
             border-radius: 50%;
             height: 30px;
             width: 30px;
@@ -131,6 +132,12 @@ function youtube_widget() {
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            transition: 0.3s; /* Transición suave al cambiar de color */
+        }
+
+        .nnwPopup-close:hover {
+            background-color: white; /* al pasar el mouse: fondo blanco */
+            color: red; /* al pasar el mouse: letra roja */
         }
 
         .playButton {
