@@ -3,8 +3,28 @@
  * Plugin Name: NNW Popup
  * Description: Un simple widget flotante para mostrar un video de YouTube.
  */
-
-// Administraci車n
+                                                                                
+/*
+ xkkkkkkkkkkkk:   okkkkkkkkkkkkkl                                               
+cllllllllllllll. ;lllllllllllllll;                                              
+llll.       :ll. ;lll.       ;lll' 'MMM. 'MMM     'MMM:  'MMM  KMM.         :MMM
+llll        ;ll. ;lll.       'lll' 'MMM; 'MMM     'MMMO  'MMM  oMM;         dMMK
+llll        ;ll. ;lll.       'lll' 'MMMd 'MMM     'MMMM. 'MMM  ,MMl  .WMo   KMMo
+llll        ;ll. ;lll.       'lll' 'MMM0 'MMM     'MMMMo 'MMM   MMx  OMMW   MMM,
+llll        ;l;':,cll.       'lll' 'MMMM.'MMM     'MMMMM.'MMM   OMX 'MMMM: cMMM 
+lll.        ;;;..,;c;.        ;ll' 'MMMMo'MMM     'MMMMMo'MMM   cMM cMMMMO OMMO 
+            ;.     .;.             'MMMMM'MMM     'MMMMMM'MMM   'MM'OMMMMM MMMc 
+lkk:        '.     .'.        dkk' 'MMMOMdMMM     'MMMcMMdMMM    MMcMMMOMMcMMM' 
+llll         'l  .c''        ;lll' 'MMMoMMMMM     'MMM.MMMMMM    OMMMMOcMMWMMM  
+llll          .'o'.          'lll' 'MMM,MMMMM     'MMM kMMMMM    cMMMMc'MMMMMO  
+llll          ,:c:           'lll' 'MMM.MMMMM     'MMM 'MMMMM    'MMMM' MMMMMc  
+llll          ;lll.          'lll' 'MMM oMMMM     'MMM  oMMMM     NMMK  cMMMM.  
+llll,         llll,          clll' 'MMM .MMMM     'MMM  .MMMM     0MMc  'MMMM   
+;llllkkkkkkkkdlllllkkkkkkkkklllll. 'MMM  OMMM     'MMM   OMMM     kMM'   MMMO   
+ ;llllllllllllllllllllllllllllll.  'MMM   OMM     'MMM    OMM     oMM    OMMc    */
+                                                                                
+                                                                             
+// admnitracion
 function youtube_widget_admin_menu() {
     add_options_page('NNW Popup', 'NNW Popup', 'manage_options', 'nnw-popup', 'youtube_widget_admin_page');
 }
@@ -89,17 +109,16 @@ function youtube_widget_button_link_field() {
 function youtube_widget() {
     $video_link = get_option('nnw_popup_video_link');
     $bg_image = get_option('nnw_popup_bg_image');
-    $button_text = get_option('nnw_popup_button_text');
-    $button_link = get_option('nnw_popup_button_link');
     $embed_url = str_replace('watch?v=', 'embed/', $video_link);
-    $embed_url .= '?autoplay=1'; // Agregamos autoplay
+    $embed_url .= '?autoplay=1'; // Añadimos autoplay
 
     ?>
-    <meta charset="UTF-8"> <!-- Aseguramos el reconocimiento de UTF-8 -->
+    <meta charset="UTF-8">
     <style>
         .nnwPopup {
-            width: 390px;
-            height: 670px; 
+            width: 80%;
+            max-width: 390px;
+            height: auto; 
             position: fixed;
             bottom: 10px;
             right: 10px;
@@ -108,11 +127,11 @@ function youtube_widget() {
             background-image: url('<?php echo esc_url($bg_image); ?>');
             background-size: cover;
             background-position: center;
-            padding: 125px 15px 15px 15px;
+            padding: 5px;
         }
         .nnwPopup iframe {
-            width: 360px;
-            height: 540px; /* Altura reducida para espacio del bot車n */
+            width: 100%;
+            height: auto;
             display: block;
             margin: 0 auto;
         }
@@ -125,15 +144,18 @@ function youtube_widget() {
             color: red;
             padding: 5px;
         }
-        .nnwPopup-button {
-            display: block;
+        .nnwPopup-title {
             text-align: center;
-            padding: 10px;
-            background-color: #000;
+            font-size: 24px;
             color: #fff;
-            text-decoration: none;
-            margin: 10px auto;
-            border-radius: 5px;
+            padding: 10px;
+        }
+        
+        @media (max-width: 480px) {
+            .nnwPopup {
+                bottom: 5px;
+                right: 5px;
+            }
         }
     </style>
     <script>
@@ -142,14 +164,14 @@ function youtube_widget() {
                 e.preventDefault();
                 document.querySelector('.nnwPopup').style.display = 'none';
                 var iframe = document.querySelector('.nnwPopup iframe');
-                iframe.src = iframe.src; // Esto har芍 que el video se detenga
+                iframe.src = iframe.src; // Esto detendrá el video
             });
         });
     </script>
     <div class="nnwPopup">
         <a href="#" class="nnwPopup-close">Cerrar</a>
+        <div class="nnwPopup-title">120</div>
         <iframe src="<?php echo esc_url($embed_url); ?>" frameborder="0" allowfullscreen></iframe>
-        <a href="<?php echo esc_url($button_link); ?>" target="_blank" class="nnwPopup-button"><?php echo esc_html($button_text); ?></a>
     </div>
     <?php
 }
