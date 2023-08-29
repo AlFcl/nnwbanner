@@ -120,7 +120,7 @@ function youtube_widget() {
             max-width: 390px;
             height: auto; 
             position: fixed;
-            bottom: 10px;
+            bottom: 0; 
             right: 10px;
             display: block;
             z-index: 9999;
