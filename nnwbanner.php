@@ -137,7 +137,7 @@ function youtube_widget() {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 120px; 
+            width: 150px; /* Ajustado para que encaje el texto "Abrir entrevista" */
             height: 50px;
             background-image: url('<?php echo esc_url($bg_image); ?>');
             background-size: cover;
@@ -158,6 +158,7 @@ function youtube_widget() {
                 width: 100vw;
                 top: 0;
                 right: 0;
+                display: none; /* Hace que el widget comience cerrado en móviles */
             }
 
             .nnwPopup iframe {
@@ -168,13 +169,17 @@ function youtube_widget() {
             .nnwPopup-close {
                 top: 70px;
             }
+            
+            .playButton {
+                display: flex; /* Hace que el botón esté visible desde el inicio en móviles */
+            }
         }
     </style>
     <div class="nnwPopup">
         <div class="nnwPopup-close">&#10005;</div>
         <iframe src="<?php echo esc_url($embed_url); ?>" frameborder="0" allowfullscreen></iframe>
     </div>
-    <div class="playButton">Abrir video</div>
+    <div class="playButton">Abrir entrevista</div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var popup = document.querySelector('.nnwPopup');
